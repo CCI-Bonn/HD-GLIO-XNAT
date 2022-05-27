@@ -1,0 +1,197 @@
+{
+    "name": "glioblastoma_segmentation",
+    "schema-version": "1.0",
+    "image": "neuroradhd/hd-glio-xnat:xnat1.7.6-fsl6",
+    "type": "docker",
+    "command-line": "",
+    "mounts": [],
+    "environment-variables": {
+        "XNAT_AE": "#xnat_ae#",
+        "REQUEST_WAIT": "#request_wait#",
+        "PACS_ADDRESS": "#pacs_address#",
+        "PACS_AE": "#pacs_ae#",
+        "USER_PASSWORD": "#user_password#",
+        "DEVICE": "#device#",
+        "USER_NAME": "#user_name#",
+        "XNAT_ENDPOINT": "#endpoint#",
+        "PACS_PORT": "#pacs_port#"
+    },
+    "ports": {},
+    "inputs": [
+        {
+            "name": "endpoint",
+            "description": null,
+            "type": "string",
+            "matcher": null,
+            "default-value": null,
+            "required": true,
+            "replacement-key": null,
+            "sensitive": null,
+            "command-line-flag": null,
+            "command-line-separator": null,
+            "true-value": null,
+            "false-value": null
+        },
+        {
+            "name": "request_wait",
+            "description": null,
+            "type": "number",
+            "matcher": null,
+            "default-value": "5",
+            "required": false,
+            "replacement-key": null,
+            "sensitive": null,
+            "command-line-flag": null,
+            "command-line-separator": null,
+            "true-value": null,
+            "false-value": null
+        },
+        {
+            "name": "pacs_address",
+            "description": null,
+            "type": "string",
+            "matcher": null,
+            "default-value": "10.10.10.175",
+            "required": false,
+            "replacement-key": null,
+            "sensitive": null,
+            "command-line-flag": null,
+            "command-line-separator": null,
+            "true-value": null,
+            "false-value": null
+        },
+        {
+            "name": "pacs_port",
+            "description": null,
+            "type": "number",
+            "matcher": null,
+            "default-value": "8106",
+            "required": false,
+            "replacement-key": null,
+            "sensitive": null,
+            "command-line-flag": null,
+            "command-line-separator": null,
+            "true-value": null,
+            "false-value": null
+        },
+        {
+            "name": "pacs_ae",
+            "description": null,
+            "type": "string",
+            "matcher": null,
+            "default-value": "PACSAE",
+            "required": false,
+            "replacement-key": null,
+            "sensitive": null,
+            "command-line-flag": null,
+            "command-line-separator": null,
+            "true-value": null,
+            "false-value": null
+        },
+        {
+            "name": "xnat_ae",
+            "description": null,
+            "type": "string",
+            "matcher": null,
+            "default-value": "XNAT",
+            "required": false,
+            "replacement-key": null,
+            "sensitive": null,
+            "command-line-flag": null,
+            "command-line-separator": null,
+            "true-value": null,
+            "false-value": null
+        },
+        {
+            "name": "user_name",
+            "description": null,
+            "type": "string",
+            "matcher": null,
+            "default-value": "admin",
+            "required": false,
+            "replacement-key": null,
+            "sensitive": null,
+            "command-line-flag": null,
+            "command-line-separator": null,
+            "true-value": null,
+            "false-value": null
+        },
+        {
+            "name": "user_password",
+            "description": null,
+            "type": "string",
+            "matcher": null,
+            "default-value": "admin",
+            "required": false,
+            "replacement-key": null,
+            "sensitive": null,
+            "command-line-flag": null,
+            "command-line-separator": null,
+            "true-value": null,
+            "false-value": null
+        },
+        {
+            "name": "device",
+            "description": null,
+            "type": "string",
+            "matcher": null,
+            "default-value": "0",
+            "required": false,
+            "replacement-key": null,
+            "sensitive": null,
+            "command-line-flag": null,
+            "command-line-separator": null,
+            "true-value": null,
+            "false-value": null
+        }
+    ],
+    "outputs": [],
+    "xnat": [
+        {
+            "name": "glioblastoma_segmentation_wrapper",
+            "label": null,
+            "description": "Run glioblastoma segmentation",
+            "contexts": [
+                "xnat:imageSessionData"
+            ],
+            "external-inputs": [
+                {
+                    "name": "session",
+                    "description": null,
+                    "type": "Session",
+                    "matcher": null,
+                    "default-value": null,
+                    "required": false,
+                    "replacement-key": null,
+                    "sensitive": null,
+                    "provides-value-for-command-input": null,
+                    "provides-files-for-command-mount": null,
+                    "via-setup-command": null,
+                    "user-settable": null,
+                    "load-children": false
+                }
+            ],
+            "derived-inputs": [
+                {
+                    "name": "endpoint",
+                    "description": null,
+                    "type": "string",
+                    "matcher": null,
+                    "default-value": null,
+                    "required": true,
+                    "replacement-key": null,
+                    "sensitive": null,
+                    "provides-value-for-command-input": "endpoint",
+                    "provides-files-for-command-mount": null,
+                    "user-settable": null,
+                    "load-children": true,
+                    "derived-from-wrapper-input": "session",
+                    "derived-from-xnat-object-property": "uri",
+                    "via-setup-command": null
+                }
+            ],
+            "output-handlers": []
+        }
+    ],
+    "reserve-memory": 90000
+}
