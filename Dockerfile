@@ -1,4 +1,4 @@
-FROM nvidia/cuda:11.1.1-devel-ubuntu20.04 AS hdglioxnatbase
+FROM nvidia/cuda:11.1.1-devel-ubuntu20.04
 
 RUN sed 's/main$/main universe/' -i /etc/apt/sources.list
 
@@ -22,8 +22,6 @@ RUN apt update -y && export DEBIAN_FRONTEND=noninteractive && apt upgrade -y && 
 COPY fsl/fslinstaller.py fslinstaller.py
 RUN python fslinstaller.py -q -d /usr/local/fsl
 
-FROM hdglioxnatbase
-
 RUN apt install python3.8-venv -y
 
 ARG USERNAME="xnat"
@@ -36,7 +34,6 @@ ARG PIP_PACKAGES="\
     torch \
     torchvision \
     git+https://github.com/MIC-DKFZ/batchgenerators.git \
-    nnunet \
     matplotlib \
     numpy \
     SimpleITK \
@@ -64,13 +61,18 @@ ENV PATH="$VIRTUAL_ENV_PATH/bin:$PATH"
 RUN python3 -m pip install --upgrade setuptools pip
 RUN python3 -m pip install --upgrade $PIP_PACKAGES
 WORKDIR /scripts/
-RUN ls -la
 RUN git clone https://github.com/MIC-DKFZ/HD-BET.git
 RUN python3 -m pip install -e HD-BET
 
 # nnUnet
 RUN git clone https://github.com/MIC-DKFZ/nnUnet.git
 RUN python3 -m pip install -e nnUnet
+
+# HD-BET models
+RUN echo "from HD_BET.utils import maybe_download_parameters\n\
+for i in range(5):\n\
+    maybe_download_parameters(i)"\
+> hdbet_models.py && python3 hdbet_models.py
 WORKDIR /
 
 ENV FSLDIR="/usr/local/fsl"
@@ -87,11 +89,6 @@ ENV PATH="${PATH}:${FSLDIR}/bin"
 ENV LANG="en_US.UTF-8"
 ENV LANGUAGE="en_US.UTF-8"
 ENV LC_ALL="en_US.UTF-8"
-
-#RUN echo "from HD_BET.utils import maybe_download_parameters\n\
-#for i in range(5):\n\
-#    maybe_download_parameters(i)"\
-#> hdbet_models.py && python3 hdbet_models.py
 
 ENV XNAT_HOST="" \
     XNAT_ENDPOINT="" \

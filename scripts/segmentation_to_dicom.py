@@ -195,7 +195,7 @@ def make_warning_image(image_size):
     ax.set_axis_off()
     fig.subplots_adjust(0, 0, 1, 1)
     canvas.draw()
-    image = np.fromstring(canvas.tostring_rgb(), dtype=np.uint8).astype(np.float64)
+    image = np.frombuffer(canvas.tostring_rgb(), dtype=np.uint8).astype(np.float64)
     target_shape = adjust_shape(image_size, image.shape[0])
     image = image.reshape(list(target_shape) + [3])[..., 0]
 
@@ -299,7 +299,7 @@ def resample(input_):
 
 def get_min_max(file_):
 
-    data = nib.load(file_).get_data()
+    data = nib.load(file_).get_fdata()
     return np.min(data), np.max(data)
 
 
@@ -420,7 +420,7 @@ def make_overlay_dicoms(input_, download_dir, seg_data):
         # except:
         #     import IPython
         #     IPython.embed()
-        current_file_new.PixelData = current_data.tostring()
+        current_file_new.PixelData = current_data.tobytes()
         current_file_new.Rows, current_file_new.Columns = current_data.shape[1:]
         current_file_new.BitsAllocated = 8
         current_file_new.BitsStored = 8

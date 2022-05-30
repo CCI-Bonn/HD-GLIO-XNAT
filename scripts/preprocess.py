@@ -203,7 +203,7 @@ def process_single(xnat_object, wait=1, verbose=True, raise_=False):
         sub_file = files[0].replace("T1", "T1sub")
         for f in (t1_file, t1ce_file):
             nifti = nib.load(f)
-            data = nifti.get_data()
+            data = nifti.get_fdata()
             data = data - np.mean(data)
             data = data / np.std(data)
             new = nib.Nifti1Image(data, nifti.affine, nifti.header)

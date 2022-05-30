@@ -114,7 +114,7 @@ def process_single(xnat_object, wait=1, verbose=True, raise_=False):
                 os.path.join(nnunet_data_dir, "segmentation_{:04d}.nii.gz".format(c)),
             )
         previous_wd = os.getcwd()
-        os.chdir("/scripts/segment/nnunet_code/nnUNet/nnunet")
+        os.chdir("/scripts/nnUnet/nnunet")
         output = subp.check_output(
             [
                 "python3",
@@ -146,7 +146,7 @@ def process_single(xnat_object, wait=1, verbose=True, raise_=False):
                 print(output)
 
         # get volumes and save as csv
-        seg = nib.load(os.path.join(download_dir, "segmentation.nii.gz")).get_data()
+        seg = nib.load(os.path.join(download_dir, "segmentation.nii.gz")).get_fdata()
         volume_labels = [
             "Edema / Nonenhancing Tumor",
             "Enhancing Tumor",
@@ -159,15 +159,15 @@ def process_single(xnat_object, wait=1, verbose=True, raise_=False):
         volumes.append(np.sum(seg == 3) / 1000.0)
         volumes.append(np.sum(volumes))
         if "ADC" in files:
-            adc_data = nib.load(files["ADC"]).get_data()
+            adc_data = nib.load(files["ADC"]).get_fdata()
             median_adc = []
             median_adc.append(np.median(adc_data[seg == 1]))
             median_adc.append(np.median(adc_data[seg == 2]))
             median_adc.append(np.median(adc_data[seg == 3]))
             median_adc.append(np.median(adc_data[seg != 0]))
         if "CBV" in files:
-            cbv_data = nib.load(files["CBV"]).get_data()
-            wm_seg = nib.load(wm_seg_file).get_data().astype(np.bool)
+            cbv_data = nib.load(files["CBV"]).get_fdata()
+            wm_seg = nib.load(wm_seg_file).get_fdata().astype(np.bool)
             wm_seg[seg != 0] = 0
             std_cbv_wm_healthy = np.std(cbv_data[wm_seg])
             median_cbv = []
