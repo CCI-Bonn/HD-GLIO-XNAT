@@ -34,10 +34,8 @@ TODO
 # =============================================================================
 
 import argparse
-import pickle
 import csv
 from datetime import datetime
-import imp
 import os
 import shutil
 import time
@@ -106,33 +104,41 @@ def process_single(xnat_object, wait=1, verbose=True, raise_=False):
                 raise IOError("Could not find file for contrast {}.".format(contrast))
 
         # prepare Decathlon format for nnU-Net and run segmentation
-        nnunet_data_dir = os.path.join(download_dir, "nnunet")
-        os.mkdir(nnunet_data_dir)
-        for c, contrast in enumerate(("T1", "T1ce", "T2", "FLAIR")):
-            shutil.move(
-                files[contrast],
-                os.path.join(nnunet_data_dir, "segmentation_{:04d}.nii.gz".format(c)),
-            )
-        previous_wd = os.getcwd()
-        os.chdir("/scripts/nnUnet/nnunet")
-        output = subp.check_output(
-            [
-                "python3",
-                "inference/predict_simple.py",
-                "-i",
-                nnunet_data_dir,
-                "-o",
-                download_dir,
-                "-t",
-                "Task12_BrainTumorIntern",
-            ]
-        )
-        os.chdir(previous_wd)
-        for c, contrast in enumerate(("T1", "T1ce", "T2", "FLAIR")):
-            shutil.move(
-                os.path.join(nnunet_data_dir, "segmentation_{:04d}.nii.gz".format(c)),
-                files[contrast],
-            )
+        # nnunet_data_dir = os.path.join(download_dir, "nnunet")
+        # os.mkdir(nnunet_data_dir)
+        # for c, contrast in enumerate(("T1", "T1ce", "T2", "FLAIR")):
+        #    shutil.move(
+        #        files[contrast],
+        #        os.path.join(nnunet_data_dir, "segmentation_{:04d}.nii.gz".format(c)),
+        #    )
+        # previous_wd = os.getcwd()
+        # os.chdir(nnunet_data_dir)
+        # output = subp.check_output(
+        #    [
+        #        "python3",
+        #        "inference/predict_simple.py",
+        #        "-i",
+        #       nnunet_data_dir,
+        #        "-o",
+        #        download_dir,
+        #        "-t",
+        #        "Task12_BrainTumorIntern",
+        #    ]
+        # )
+        cmd = [
+            "hd_glio_predict",
+            "-t1",
+            files[CONTRASTS[0]],
+            "-t1c",
+            files[CONTRASTS[1]],
+            "-t2",
+            files[CONTRASTS[2]],
+            "-flair",
+            files[CONTRASTS[3]],
+            "-o",
+            os.path.join(download_dir, "segmentation.nii.gz"),
+        ]
+        output = subp.check_output(cmd)
         if verbose:
             print(output)
 
@@ -167,7 +173,7 @@ def process_single(xnat_object, wait=1, verbose=True, raise_=False):
             median_adc.append(np.median(adc_data[seg != 0]))
         if "CBV" in files:
             cbv_data = nib.load(files["CBV"]).get_fdata()
-            wm_seg = nib.load(wm_seg_file).get_fdata().astype(np.bool)
+            wm_seg = nib.load(wm_seg_file).get_fdata().astype(bool)
             wm_seg[seg != 0] = 0
             std_cbv_wm_healthy = np.std(cbv_data[wm_seg])
             median_cbv = []

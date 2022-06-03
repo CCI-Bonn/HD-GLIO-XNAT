@@ -68,11 +68,21 @@ RUN python3 -m pip install -e HD-BET
 RUN git clone https://github.com/MIC-DKFZ/nnUnet.git
 RUN python3 -m pip install -e nnUnet
 
+# HD-GLIO
+RUN git clone https://github.com/NeuroAI-HD/HD-GLIO
+RUN python3 -m pip install -e HD-GLIO
+
 # HD-BET models
 RUN echo "from HD_BET.utils import maybe_download_parameters\n\
 for i in range(5):\n\
     maybe_download_parameters(i)"\
 > hdbet_models.py && python3 hdbet_models.py
+
+# HD-GLIO models
+RUN echo "from hd_glio.setup_hd_glio import maybe_download_weights\n\
+maybe_download_weights()"\
+> hdglio_models.py && python3 hdglio_models.py
+
 WORKDIR /
 
 ENV FSLDIR="/usr/local/fsl"
