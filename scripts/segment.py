@@ -152,7 +152,9 @@ def process_single(xnat_object, wait=1, verbose=True, raise_=False):
                 print(output)
 
         # get volumes and save as csv
-        seg = nib.load(os.path.join(download_dir, "segmentation.nii.gz")).get_fdata()
+        img = nib.load(os.path.join(download_dir, "segmentation.nii.gz"))
+        pixel_volume = np.product(img.header.get_zooms())
+        seg = img.get_fdata()
         volume_labels = [
             "Edema / Nonenhancing Tumor",
             "Enhancing Tumor",
@@ -160,9 +162,9 @@ def process_single(xnat_object, wait=1, verbose=True, raise_=False):
             "Whole Tumor",
         ]
         volumes = []
-        volumes.append(np.sum(seg == 1) / 1000.0)
-        volumes.append(np.sum(seg == 2) / 1000.0)
-        volumes.append(np.sum(seg == 3) / 1000.0)
+        volumes.append(np.sum(seg == 1) * pixel_volume / 1000.0)
+        volumes.append(np.sum(seg == 2) * pixel_volume / 1000.0)
+        volumes.append(np.sum(seg == 3) * pixel_volume / 1000.0)
         volumes.append(np.sum(volumes))
         if "ADC" in files:
             adc_data = nib.load(files["ADC"]).get_fdata()
