@@ -1,11 +1,5 @@
 # HD-GLIO-XNAT docker container
 
-## Contributions
-The main contributions to this project have been made by the project owners / contributors to nnUnet, HD-BET, HD-GLIO and HD-GLIO-AUTO, in particular Fabian Isensee and Jens Petersen as parts of the Division of Medical Image Computing, German Cancer Research Center DKFZ, Heidelberg, Germany.
-See https://github.com/MIC-DKFZ/nnUNet, https://github.com/NeuroAI-HD/HD-GLIO-AUTO, https://github.com/NeuroAI-HD/HD-GLIO, https://github.com/NeuroAI-HD/HD-BET.
-The python scripts in this repository in particular have been authored by Jens Petersen, see authorship information in the respective python files. 
-The repository has been updated and reviewed for publication by Hagen Meredig, Neuroradiology Department, University Clinic Heidelberg, Heidelberg, Germany as well as the previously mentioned contributors.
-
 ## Software versions
 The docker image built from this repository is intended to be used and tested with XNAT version 1.7.6.
 You can pull the ready built image from dockerhub by `docker pull neuroradhd/hd-glio-xnat:xnat1.7.6-fsl6`.
@@ -37,6 +31,12 @@ the FSL Software License Version v6 2018 applies to this repository as well. Ple
 Many steps are involved in the complete processing workflow. For problems regarding XNAT, Docker including GPU access and the container integration in XNAT, please refer to their respective documentation. 
 Container execution itself can be monitored by checking the container's log files. 
 See output of `docker ps` or `docker ps -a` to get the container ID. Watch the log by `docker logs <container-id>`.
+
+## Contributions
+The main contributions to this project have been made by the project owners / contributors to nnUnet, HD-BET, HD-GLIO and HD-GLIO-AUTO, in particular Fabian Isensee and Jens Petersen as parts of the Division of Medical Image Computing, German Cancer Research Center DKFZ, Heidelberg, Germany.
+See https://github.com/MIC-DKFZ/nnUNet, https://github.com/NeuroAI-HD/HD-GLIO-AUTO, https://github.com/NeuroAI-HD/HD-GLIO, https://github.com/NeuroAI-HD/HD-BET.
+The python scripts in this repository in particular have been authored by Jens Petersen, see authorship information in the respective python files. 
+The repository has been updated and reviewed for publication by Hagen Meredig, Neuroradiology Department, University Clinic Heidelberg, Heidelberg, Germany as well as the previously mentioned contributors.
 
 ## License
 This software is released under the Apache License Version 2.0, January 2004 (see LICENSE file in the root directory). 
