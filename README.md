@@ -1,4 +1,10 @@
 # HD-GLIO-XNAT docker container
+This container allows to integrate our automated processing tool for MRI in neuro-oncology (brain tumor segmentation, volumetric tumor response assessment) into existing radiological infrastructures through the XNAT framework as a Container Service Plugin. HD-GLIO-XNAT is the result of a joint project between the Department of Neuroradiology at the Heidelberg University Hospital, Germany and the Division of Medical Image Computing at the German Cancer Research Center (DKFZ) Heidelberg, Germany. If you are using HD-GLIO-XNAT please cite the following four publications:
+
+* Kickingereder P, Isensee F, Tursunova I, Petersen J, Neuberger U, Bonekamp D, Brugnara G, Schell M, Kessler T, Foltyn M, Harting I, Sahm F, Prager M, Nowosielski M, Wick A, Nolden M, Radbruch A, Debus J, Schlemmer HP, Heiland S, Platten M, von Deimling A, van den Bent MJ, Gorlia T, Wick W, Bendszus M, Maier-Hein KH. Automated quantitative tumour response assessment of MRI in neuro-oncology with artificial neural networks: a multicentre, retrospective study. Lancet Oncol. 2019 May;20(5):728-740. (https://doi.org/10.1016/S1470-2045(19)30098-1)
+* Isensee F, Schell M, Tursunova I, Brugnara G, Bonekamp D, Neuberger U, Wick A, Schlemmer HP, Heiland S, Wick W, Bendszus M, Maier-Hein KH, Kickingereder P. Automated brain extraction of multi-sequence MRI using artificial neural networks. Hum Brain Mapp. 2019; 1–13. (https://doi.org/10.1002/hbm.24750)
+* Vollmuth P, Foltyn M, Huang RY, Galldiks N, Petersen J, Isensee F, van den Bent MJ, Barkhof F, Park JE, Park YW, Ahn SS, Brugnara G, Meredig H, Jain R, Smits M, Pope WB, Maier-Hein K, Weller M, Wen PY, Wick W, Bendszus M. Artificial Intelligence(AI)-based decision support improves reproducibility of tumor response assessment in neuro-oncology: an international multi-reader study. Neuro Oncol. 2022 Aug 2:noac189 (doi: 10.1093/neuonc/noac189)
+* Isensee F, Jaeger PF, Kohl SAA, Petersen J, Maier-Hein KH. nnU-Net: a self-configuring method for deep learning-based biomedical image segmentation. Nat Methods. 2021 Feb;18(2):203-211. (doi: 10.1038/s41592-020-01008-z)
 
 ## Software versions
 The docker image built from this repository is intended to be used and tested with XNAT version 1.7.6.
@@ -37,7 +43,7 @@ See output of `docker ps` or `docker ps -a` to get the container ID. Watch the l
 The main contributions to this project have been made by the project owners / contributors to nnUnet, HD-BET, HD-GLIO and HD-GLIO-AUTO, in particular Fabian Isensee and Jens Petersen as parts of the Division of Medical Image Computing, German Cancer Research Center DKFZ, Heidelberg, Germany.
 See https://github.com/MIC-DKFZ/nnUNet, https://github.com/NeuroAI-HD/HD-GLIO-AUTO, https://github.com/NeuroAI-HD/HD-GLIO, https://github.com/NeuroAI-HD/HD-BET.
 The python scripts in this repository in particular have been authored by Jens Petersen, see authorship information in the respective python files. 
-The repository has been updated and reviewed for publication by Hagen Meredig, Neuroradiology Department, University Clinic Heidelberg, Heidelberg, Germany as well as the previously mentioned contributors.
+The repository has been updated and reviewed for publication by Hagen Meredig, Department of Neuroradiology, Heidelberg University Hospital, Heidelberg, Germany as well as the previously mentioned contributors.
 
 ## License
 This software is released under the Apache License Version 2.0, January 2004 (see LICENSE file in the root directory). 
